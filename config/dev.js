@@ -13,7 +13,7 @@ export default {
     babel({
       babelrc: false,
       exclude: 'node_modules/**',
-      presets: [ [ 'es2015', { modules: false } ], 'stage-0', 'react' ],
+      presets: [ [ 'es2015', { modules: false } ], 'stage-3', 'react' ],
       plugins: [ 'external-helpers' ]
     }),
     cjs({

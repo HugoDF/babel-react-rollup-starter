@@ -25,17 +25,20 @@
     "node": ">=6.0.0"
   },
   "dependencies": {
-    "react": "15.5.3",
-    "react-dom": "15.5.3"
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4"
   },
   "devDependencies": {
     "babel-plugin-external-helpers": "6.18.0",
     "babel-preset-es2015": "6.24.1",
     "babel-preset-react": "6.24.1",
-    "babel-preset-stage-0": "6.24.1",
+    "babel-preset-stage-3": "6.24.1",
     "browser-sync": "2.18.8",
+    "enzyme": "^2.8.2",
+    "jest": "^19.0.2",
     "npm-run-all": "4.0.2",
     "onchange": "3.2.1",
+    "react-test-renderer": "^15.5.4",
     "rollup": "0.41.6",
     "rollup-plugin-babel": "2.7.1",
     "rollup-plugin-commonjs": "8.0.2",
@@ -43,26 +46,24 @@
     "rollup-plugin-node-resolve": "3.0.0",
     "rollup-plugin-replace": "1.1.1",
     "rollup-plugin-uglify": "1.0.1",
-    "snazzy": "6.0.0",
-    "standard": "10.0.1"
+    "sinon": "^2.1.0"
   },
   "scripts": {
-    "prebuild": "npm run std --silent",
-    "build": "rollup -c config/prod.js",
-    "prebuild:dev": "npm run std --silent",
+    "clean:build": "rm -rf build",
+    "build": "npm-run-all clean:build build:js build:html",
+    "build:html": "cp ./html/index.html ./build",
+    "build:js": "rollup -c config/prod.js",
     "build:dev": "rollup -c config/dev.js",
     "browse": "browser-sync start --s --index 'html/index-dev.html' --files 'html/**/*.html, build/**/*.js' --no-notify",
     "start": "npm run build:dev && npm-run-all --parallel watch browse",
-    "std": "standard --verbose | snazzy",
-    "test": "npm run build:dev",
-    "watch": "onchange src -- npm run build:dev",
-    "preversion": "git pull && npm up && npm run std --silent",
-    "version": "npm run build && git add -A .",
-    "postversion": "git push --tags origin HEAD"
+    "test": "jest",
+    "watch": "onchange src -- npm run build:dev"
   },
-  "standard": {
-    "ignore": [
-      "build"
+  "babel": {
+    "presets": [
+      "es2015",
+      "stage-3",
+      "react"
     ]
   }
 }
